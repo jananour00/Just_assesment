@@ -1,6 +1,8 @@
 package ecommerce_backend.ecommerce_backend.service;
 
 import ecommerce_backend.ecommerce_backend.dto.AuthDTO;
+import ecommerce_backend.ecommerce_backend.exception.EmailAlreadyExistsException;
+import ecommerce_backend.ecommerce_backend.exception.ResourceNotFoundException;
 import ecommerce_backend.ecommerce_backend.model.Role;
 import ecommerce_backend.ecommerce_backend.model.User;
 import ecommerce_backend.ecommerce_backend.repository.UserRepository;
@@ -33,7 +35,7 @@ public class AuthServiceImpl implements AuthService {
     public AuthDTO.Response register(AuthDTO.RegisterRequest request) {
 
         if (userRepository.existsByEmail(request.email())) {
-            throw new RuntimeException("Email already exists");
+            throw new EmailAlreadyExistsException(request.email());
         }
 
         User user = User.builder()
@@ -72,7 +74,7 @@ public class AuthServiceImpl implements AuthService {
         );
 
         User user = userRepository.findByEmail(request.email())
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("User", "email", request.email()));
 
         UserDetails userDetails =
                 org.springframework.security.core.userdetails.User
