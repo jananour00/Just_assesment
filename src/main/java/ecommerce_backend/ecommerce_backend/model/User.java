@@ -36,4 +36,7 @@ public class User extends BaseEntity {
 
     public static <E> Enum<E> getRole() {
     }
+
+    public static <E> Enum<E> builder() {
+    }
 }
