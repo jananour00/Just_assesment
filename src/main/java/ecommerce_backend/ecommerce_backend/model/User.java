@@ -27,16 +27,4 @@ public class User extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     private Role role;
-
-    public static String getEmail() {
-    }
-
-    public static @Nullable String getPassword() {
-    }
-
-    public static <E> Enum<E> getRole() {
-    }
-
-    public static <E> Enum<E> builder() {
-    }
 }
